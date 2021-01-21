@@ -1,0 +1,26 @@
+---
+# Preparation
+- name: gather required facts
+  setup:
+    gather_subset: [min]
+  when: ansible_os_family is not defined
+
+- include_tasks: variables.yml
+- include_tasks: setup.yml
+
+- name: prepare initial-setup script
+  include_tasks: initial-setup.yml
+  when: postgresql_initial_setup
+
+- include_tasks: initialize.yml
+- include_tasks: configure.yml
+
+- name: Ensure PostgreSQL is started and enabled on boot
+  service:
+    name: "{{ postgresql_daemon }}"
+    state: started
+    enabled: true
+
+# Configuration
+- import_tasks: databases.yml
+- import_tasks: users.yml

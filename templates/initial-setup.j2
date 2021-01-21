@@ -1,0 +1,11 @@
+#!/bin/bash
+
+data_dir="/var/lib/postgresql"
+pg_user="{{ postgresql_user }}"
+pg_group="{{ postgresql_group }}"
+
+test -d "${data_dir}" || {
+  mkdir -pv "${data_dir}" && \
+    chmod 755 "${data_dir}" && \
+      chown "${pg_user}:${pg_group}" "${data_dir}"
+}
