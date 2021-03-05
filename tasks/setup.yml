@@ -1,8 +1,17 @@
 ---
-- name: Ensure PostgreSQL Python libraries are installed
+
+- name: Ensure needed Python modules are installed
   apt:
-    name: "{{ postgresql_python_library }}"
     state: present
+    name:
+      - python-setuptools
+      - python3-pip
+
+- name: Ensure psycopg2-binary is installed
+  pip:
+    name: psycopg2-binary
+    state: present
+    executable: pip3
 
 - name: Ensure PostgreSQL packages are installed
   apt:
@@ -14,10 +23,7 @@
     name: "{{ item }}"
     state: present
   with_items: "{{ postgresql_locales }}"
-  register: locale_gen_result
+  notify: restart postgresql service
 
 - name: Force-restart PostgreSQL after new locales are generated
-  service:
-    name: "{{ postgresql_daemon }}"
-    state: restarted
-  when: locale_gen_result.changed
+  meta: flush_handlers

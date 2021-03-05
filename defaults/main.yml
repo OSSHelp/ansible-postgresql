@@ -1,5 +1,5 @@
 ---
-postgresql_python_library: python-psycopg2
+
 postgresql_user: postgres
 postgresql_group: postgres
 postgresql_initial_setup: false

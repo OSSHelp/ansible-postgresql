@@ -7,44 +7,28 @@ The role for PostgreSQL installation
 ## Usage (example)
 
 ```yaml
-    - { role: postgresql,
-        postgresql_initial_setup: true,
-        postgresql_global_config_options: [
-          {
-            option: unix_socket_directories,
-            value: '/var/run/postgresql'
-          },
-          {
-            option: listen_addresses,
-            value: '*'
-          }
-        ],
-        postgresql_databases: [
-          {
-            name: test_db1,
-            lc_collate: 'en_US.UTF-8',
-            lc_ctype: 'en_US.UTF-8',
-            encoding: 'UTF-8',
-            template: 'template0',
-            login_host: 'localhost',
-            login_password: '',
-            login_user: postgres
-          },
-          {
-            name: test_db2
-          }
-        ],
-        postgresql_users: [
-          {
-            name: test_user,
-            password: '',
-            db: 'test_db1',
-            login_host: 'localhost',
-            login_password: '',
-            login_user: postgres
-          }
-        ]
-    }
+    - role: postgresql
+      postgresql_initial_setup: true
+      postgresql_global_config_options:
+        - {option: unix_socket_directories, value: '/var/run/postgresql'}
+        - {option: listen_addresses, value: '*'}
+      postgresql_databases:
+        - name: test_db1
+          lc_collate: 'en_US.UTF-8'
+          lc_ctype: 'en_US.UTF-8'
+          encoding: 'UTF-8'
+          template: 'template0'
+          login_host: 'localhost'
+          login_password: ''
+          login_user: postgres
+        - name: test_db2
+      postgresql_users:
+        - name: test_user
+          password: ''
+          db: 'test_db1'
+          login_host: 'localhost'
+          login_password: ''
+          login_user: postgres
 ```
 
 ## Available parameters
