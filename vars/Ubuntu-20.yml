@@ -8,3 +8,9 @@ __postgresql_packages:
   - postgresql
   - postgresql-contrib
   - libpq-dev
+
+__postgresql_python_modules_apt:
+  - python-setuptools
+  - python3-pip
+
+__postgresql_python_modules_pip: []

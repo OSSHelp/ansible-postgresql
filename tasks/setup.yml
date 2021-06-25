@@ -1,15 +1,13 @@
 ---
 
-- name: Ensure needed Python modules are installed
+- name: Install Python modules via apt
   apt:
+    name: "{{ postgresql_python_modules_apt }}"
     state: present
-    name:
-      - python-setuptools
-      - python3-pip
 
-- name: Ensure psycopg2-binary is installed
+- name: Install Python modules via pip
   pip:
-    name: psycopg2-binary
+    name: "{{ postgresql_python_modules_pip }}"
     state: present
     executable: pip3
 
@@ -17,6 +15,12 @@
   apt:
     name: "{{ postgresql_packages }}"
     state: present
+
+- name: Ensure psycopg2-binary is installed
+  pip:
+    name: psycopg2-binary
+    state: present
+    executable: pip3
 
 - name: Ensure all configured locales are present
   locale_gen:
